@@ -1,0 +1,92 @@
+1. REGISTER 
+	url: http://127.0.0.1:8000/api/soap/auth/register
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <RegisterRequest>
+            <name>Satrio Edhy</name>
+            <email>satriosatyricon@gmail.com</email>
+            <password>12345678</password>
+            <password_confirmation>12345678</password_confirmation>
+        </RegisterRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+2. LOGIN
+	url: http://127.0.0.1:8000/api/soap/auth/login
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <LoginRequest>
+            <email>satriosatyricon@gmail.com</email>
+            <password>12345678</password>
+        </LoginRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+3. LOGOUT
+	url: http://127.0.0.1:8000/api/soap/auth/logout
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <LogoutRequest>
+            <token>1|1eM8eDThLxsbhC29LvIZXJwxPZJafHH2J7UqieaM</token>
+        </LogoutRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+4. ADD PRODUCT
+	url: http://127.0.0.1:8000/api/soap/product/create
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <createProductRequest>
+            <name>Lemon Tea</name>
+            <description>Lemon tea is a beverage made by steeping tea leaves in hot water and adding lemon juice or slices to give it a citrusy flavor.</description>
+            <price>2</price>
+        </createProductRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+5. READ PRODUCT
+	url: http://127.0.0.1:8000/api/soap/product/read
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <readProductRequest>
+            <id>1</id>
+        </readProductRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+6. UPDATE PRODUCT
+	url: http://127.0.0.1:8000/api/soap/product/update
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <updateProductRequest>
+            <id>1</id>
+            <name>Milk Tea</name>
+            <description>Milk tea is a beverage that combines tea and milk, and can be served hot or cold.</description>
+            <price>2</price>
+        </updateProductRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+7. DELETE PRODUCT
+	url: http://127.0.0.1:8000/api/soap/product/delete
+	method: post
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <deleteProductRequest>
+            <id>1</id>
+        </deleteProductRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

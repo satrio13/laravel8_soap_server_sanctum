@@ -95,40 +95,46 @@ class AuthController extends Controller
 
     function logout(Request $request)
     {
-        $xml = simplexml_load_string($request->getContent());
-        $data = SoapHelper::parseSoapRequest($xml, ['token']);
-    
-        if(empty($data['token'])) 
+        try 
         {
-            return SoapHelper::soapFaultResponse('Client', 'Token is required for logout');
-        }
-    
-        $token = $data['token'];
-    
-        // Cari user yang memiliki token tersebut
-        $user = User::whereHas('tokens', function ($query) use ($token) {
-            $query->where('id', $token); // Sesuaikan dengan cara token disimpan, jika menggunakan token ID
-        })->first();
-    
-        if(!$user) 
-        {
-            return SoapHelper::soapFaultResponse('Client', 'Invalid token or user not found');
-        }
-    
-        // Menghapus token yang sesuai dengan token yang dikirimkan
-        $user->tokens->each(function ($userToken) use ($token) 
-        {
-            if($userToken->id == $token) 
+            $xml = simplexml_load_string($request->getContent());
+            $data = SoapHelper::parseSoapRequest($xml, ['token']);
+        
+            if(empty($data['token'])) 
             {
-                $userToken->delete(); // Menghapus token yang sesuai
+                return SoapHelper::soapFaultResponse('Client', 'Token is required for logout');
             }
-        });
-    
-        $xmlResponse = SoapHelper::soapSuccessResponse('logoutResponse', [
-            'message' => 'Logout successful'
-        ]);
-    
-        return response()->make($xmlResponse, 200, ['Content-Type' => 'application/soap+xml']);
+        
+            $token = $data['token'];
+        
+            // Cari user yang memiliki token tersebut
+            $user = User::whereHas('tokens', function ($query) use ($token) {
+                $query->where('id', $token); // Sesuaikan dengan cara token disimpan, jika menggunakan token ID
+            })->first();
+        
+            if(!$user) 
+            {
+                return SoapHelper::soapFaultResponse('Client', 'Invalid token or user not found');
+            }
+        
+            // Menghapus token yang sesuai dengan token yang dikirimkan
+            $user->tokens->each(function ($userToken) use ($token) 
+            {
+                if($userToken->id == $token) 
+                {
+                    $userToken->delete(); // Menghapus token yang sesuai
+                }
+            });
+        
+            $xmlResponse = SoapHelper::soapSuccessResponse('logoutResponse', [
+                'message' => 'Logout successful'
+            ]);
+        
+            return response()->make($xmlResponse, 200, ['Content-Type' => 'application/soap+xml']);
+        }catch(\Exception $e) 
+        {
+            return SoapHelper::soapFaultResponse('Server', 'Invalid XML format or server error');
+        }
     }
 
 } 

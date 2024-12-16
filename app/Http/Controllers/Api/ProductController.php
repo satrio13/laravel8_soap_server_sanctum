@@ -101,11 +101,7 @@ class ProductController extends Controller
             $product = Product::find($data['id']);
             if($product)
             {
-                $product->update([
-                    'name' => $data['name'],
-                    'description' => $data['description'],
-                    'price' => $data['price']
-                ]);
+                $product->update($data);
 
                 $xmlResponse = SoapHelper::soapSuccessResponse('updateProductResponse', [
                     'message' => 'Product updated successfully',
